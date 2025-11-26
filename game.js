@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const levelTitle = document.getElementById('level-title');
     const levelDescription = document.getElementById('level-description');
     const levelCompleteText = document.getElementById('level-complete-text');
+    const attemptsCounter = document.getElementById('attempts');
+    const currentPhaseIndicator = document.getElementById('current-phase');
+    const pauseOverlay = document.getElementById('pause-overlay');
 
     const canvas = document.getElementById('game-canvas');
     if (!canvas) {
@@ -41,63 +44,70 @@ document.addEventListener('DOMContentLoaded', () => {
     let player, platforms, goal, gameWon, animationId, isGameActive = false;
     let fallMessageTimeout = null;
     let currentLevel = 0;
+    let attempts = 0;
+    let isPaused = false;
+    let startTime = 0;
+    let levelStartTime = 0;
     
     // Configurações das fases
     const LEVELS = [
         {
-            title: "Fase 1: Catedral Nossa Senhora do Desterro",
-            description: "Explore este marco histórico de Jundiaí!",
-            clue: "Chega até a catedral no topo sem cair.",
+            title: "fase 1: Catedral Nossa Senhora do Desterro",
+            description: "a igrejinha massa la",
+            clue: "chega la em cima ai",
             bgColor: '#e8f4f8',
             platformColor: '#8b9dc3',
             goalColor: '#d4a574',
             goalEmoji: '⛪',
             platforms: [
                 { x: 0,   y: 170, width: CANVAS_WIDTH, height: 30 },  // chão
-                { x: 50,  y: 140, width: 50,  height: 10 },
-                { x: 120, y: 115, width: 60,  height: 10 },
-                { x: 200, y: 90,  width: 70,  height: 10 },
-                { x: 290, y: 65,  width: 50,  height: 10 }
+                { x: 70,  y: 145, width: 45,  height: 10 },
+                { x: 140, y: 115, width: 40,  height: 10 },
+                { x: 200, y: 85,  width: 35,  height: 10 },
+                { x: 260, y: 55,  width: 40,  height: 10 }
             ],
-            goal: { x: 300, y: 35, size: 18 },
+            goal: { x: 300, y: 25, size: 18 },
             playerStart: { x: 20, y: 140 }
         },
         {
-            title: "Fase 2: Mosteiro de São Bento",
-            description: "Um dos edifícios mais antigos de Jundiaí, fundado em 1667!",
-            clue: "Atravesse os degraus do mosteiro com cuidado.",
+            title: "fase 2: Mosteiro de São Bento",
+            description: "o mosteiro antigao ai, de 1667",
+            clue: "sobe os degrau ai",
             bgColor: '#f5f0e8',
             platformColor: '#9d8b6f',
             goalColor: '#c9a961',
             goalEmoji: '🏛️',
             platforms: [
                 { x: 0,   y: 170, width: CANVAS_WIDTH, height: 30 },  // chão
-                { x: 40,  y: 150, width: 40,  height: 10 },
-                { x: 100, y: 130, width: 50,  height: 10 },
-                { x: 170, y: 110, width: 60,  height: 10 },
-                { x: 250, y: 90,  width: 50,  height: 10 },
-                { x: 320, y: 70,  width: 30,  height: 10 }
+                { x: 50,  y: 150, width: 35,  height: 10 },
+                { x: 110, y: 125, width: 30,  height: 10 },
+                { x: 160, y: 100, width: 35,  height: 10 },
+                { x: 220, y: 75,  width: 30,  height: 10 },
+                { x: 280, y: 50,  width: 35,  height: 10 },
+                { x: 330, y: 30,  width: 25,  height: 10 }
             ],
-            goal: { x: 330, y: 40, size: 18 },
+            goal: { x: 335, y: 10, size: 18 },
             playerStart: { x: 20, y: 140 }
         },
         {
-            title: "Fase 3: Teatro Polytheama",
-            description: "O maior teatro do estado de São Paulo na década de 1920!",
-            clue: "Alcance o palco do teatro histórico.",
+            title: "fase 3: Teatro Polytheama",
+            description: "o teatro massa de jundiai",
+            clue: "chega no palco la",
             bgColor: '#fff5e6',
             platformColor: '#b8860b',
             goalColor: '#daa520',
             goalEmoji: '🎭',
             platforms: [
                 { x: 0,   y: 170, width: CANVAS_WIDTH, height: 30 },  // chão
-                { x: 30,  y: 145, width: 45,  height: 10 },
-                { x: 90,  y: 120, width: 55,  height: 10 },
-                { x: 160, y: 95,  width: 65,  height: 10 },
-                { x: 240, y: 70,  width: 55,  height: 10 },
-                { x: 310, y: 45,  width: 40,  height: 10 }
+                { x: 40,  y: 150, width: 30,  height: 10 },
+                { x: 90,  y: 125, width: 25,  height: 10 },
+                { x: 140, y: 100, width: 30,  height: 10 },
+                { x: 190, y: 75,  width: 25,  height: 10 },
+                { x: 240, y: 50,  width: 30,  height: 10 },
+                { x: 290, y: 30,  width: 25,  height: 10 },
+                { x: 330, y: 15,  width: 20,  height: 10 }
             ],
-            goal: { x: 320, y: 15, size: 18 },
+            goal: { x: 335, y: 0, size: 18 },
             playerStart: { x: 20, y: 140 }
         }
     ];
@@ -114,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showFallMessage() {
         if (clueElement) {
             const originalText = clueElement.textContent;
-            clueElement.textContent = "Ops! Caiu! Tenta de novo...";
+            clueElement.textContent = "caiu kkkkk tenta de novo ai";
             clueElement.style.color = '#e74c3c';
             
             if (fallMessageTimeout) {
@@ -133,6 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const level = LEVELS[levelIndex];
         currentLevel = levelIndex;
+        attempts = 0; // Resetar tentativas ao mudar de fase
+        levelStartTime = Date.now();
         
         // Atualizar informações da fase
         if (levelTitle) levelTitle.textContent = level.title;
@@ -141,6 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
             clueElement.textContent = level.clue;
             clueElement.style.color = '';
         }
+        
+        // Atualizar indicador de progresso
+        if (currentPhaseIndicator) {
+            currentPhaseIndicator.textContent = levelIndex + 1;
+        }
+        updateAttemptsCounter();
         
         // Configurar plataformas e objetivo
         platforms = JSON.parse(JSON.stringify(level.platforms)); // Deep copy
@@ -158,6 +176,38 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         gameWon = false;
+        isPaused = false;
+        if (pauseOverlay) {
+            pauseOverlay.classList.add('hidden');
+        }
+    }
+    
+    function updateAttemptsCounter() {
+        if (attemptsCounter) {
+            attemptsCounter.textContent = attempts;
+        }
+    }
+    
+    function togglePause() {
+        if (!isGameActive) return;
+        
+        isPaused = !isPaused;
+        if (pauseOverlay) {
+            if (isPaused) {
+                pauseOverlay.classList.remove('hidden');
+            } else {
+                pauseOverlay.classList.add('hidden');
+            }
+        }
+    }
+    
+    function restartCurrentLevel() {
+        if (!isGameActive) return;
+        attempts++;
+        updateAttemptsCounter();
+        resetGame();
+        isPaused = false;
+        if (pauseOverlay) pauseOverlay.classList.add('hidden');
     }
 
     function resetGame() {
@@ -182,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function update() {
         if (!isGameActive || !player) return;
+        if (isPaused) return; // Não atualizar quando pausado
 
         player.vx = 0;
         if (keys.left)  player.vx = -MOVE_SPEED;
@@ -251,6 +302,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Detectar queda
         if (player.y > canvas.height + FALL_RESET_THRESHOLD) {
+            attempts++;
+            updateAttemptsCounter();
             showFallMessage();
             resetGame();
         }
@@ -272,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (levelCompleteScreen) {
                         const nextLevel = LEVELS[currentLevel + 1];
                         if (levelCompleteText) {
-                            levelCompleteText.textContent = `Você completou ${LEVELS[currentLevel].title}! Pronto para ${nextLevel.title}?`;
+                            levelCompleteText.textContent = `fase ${currentLevel + 1} completa! bora pra proxima?`;
                         }
                         levelCompleteScreen.classList.remove('hidden');
                     }
@@ -287,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function draw() {
         if (!isGameActive || !player || !platforms || !goal) return;
+        // Desenhar mesmo quando pausado (para mostrar o estado atual)
         
         const level = LEVELS[currentLevel];
         
@@ -340,7 +394,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleKeyDown(e) {
-        if (!isGameActive || !player) return;
+        // Teclas de atalho globais
+        if (e.key === 'p' || e.key === 'P') {
+            if (isGameActive) {
+                togglePause();
+                e.preventDefault();
+            }
+            return;
+        }
+        
+        if (e.key === 'r' || e.key === 'R') {
+            if (isGameActive && !isPaused) {
+                restartCurrentLevel();
+                e.preventDefault();
+            }
+            return;
+        }
+        
+        if (e.key === 'Escape') {
+            if (isPaused) {
+                togglePause();
+            } else if (isGameActive) {
+                // Voltar ao menu (opcional)
+                stopGameLoop();
+                isGameActive = false;
+                if (gameScreen) gameScreen.classList.add('hidden');
+                if (startScreen) startScreen.classList.remove('hidden');
+            }
+            e.preventDefault();
+            return;
+        }
+        
+        if (!isGameActive || !player || isPaused) return;
         
         if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
         if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
@@ -390,10 +475,32 @@ document.addEventListener('DOMContentLoaded', () => {
     function startGame() {
         stopGameLoop(); // Garantir que não há loop anterior rodando
         currentLevel = 0; // Começar da primeira fase
-        if (startScreen) startScreen.classList.add('hidden');
+        attempts = 0;
+        startTime = Date.now();
+        isPaused = false;
+        
+        // Garantir que o overlay de pausa está oculto
+        if (pauseOverlay) {
+            pauseOverlay.classList.add('hidden');
+        }
+        
+        // Animações de transição
+        if (startScreen) {
+            startScreen.style.opacity = '0';
+            setTimeout(() => {
+                startScreen.classList.add('hidden');
+                startScreen.style.opacity = '1';
+            }, 200);
+        }
         if (levelCompleteScreen) levelCompleteScreen.classList.add('hidden');
         if (messageScreen) messageScreen.classList.add('hidden');
-        if (gameScreen) gameScreen.classList.remove('hidden');
+        if (gameScreen) {
+            gameScreen.classList.remove('hidden');
+            gameScreen.style.opacity = '0';
+            setTimeout(() => {
+                gameScreen.style.opacity = '1';
+            }, 50);
+        }
         loadLevel(0);
         isGameActive = true;
         loop();
@@ -403,8 +510,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function nextLevel() {
         stopGameLoop();
         currentLevel++;
-        if (levelCompleteScreen) levelCompleteScreen.classList.add('hidden');
-        if (gameScreen) gameScreen.classList.remove('hidden');
+        isPaused = false;
+        
+        // Animações de transição
+        if (levelCompleteScreen) {
+            levelCompleteScreen.style.opacity = '0';
+            setTimeout(() => {
+                levelCompleteScreen.classList.add('hidden');
+                levelCompleteScreen.style.opacity = '1';
+            }, 200);
+        }
+        if (gameScreen) {
+            gameScreen.classList.remove('hidden');
+            gameScreen.style.opacity = '0';
+            setTimeout(() => {
+                gameScreen.style.opacity = '1';
+            }, 50);
+        }
         loadLevel(currentLevel);
         isGameActive = true;
         loop();

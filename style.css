@@ -5,44 +5,64 @@
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Montserrat', sans-serif;
+    background: #fafafa;
     min-height: 100vh;
-    color: #333;
+    color: #2c3e50;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1.5rem;
     text-align: center;
 }
 
 header {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    padding-top: 1rem;
 }
 
 h1 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3rem;
-    color: #1f3c88;
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    color: #1f3c88;
-    opacity: 0.8;
+    font-size: 1rem;
+    color: #666;
+    font-weight: 400;
 }
 
 .screen {
     background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    margin: 2rem 0;
-    transition: all 0.3s ease;
+    padding: 2.5rem;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    margin: 1.5rem 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+}
+
+.screen h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+}
+
+.screen p {
+    color: #4a4a4a;
+    font-size: 0.95rem;
+    line-height: 1.7;
 }
 
 .hidden {
@@ -50,23 +70,27 @@ h1 {
 }
 
 .btn {
-    background: #1f3c88;
+    background: #1a1a1a;
     color: white;
     border: none;
-    padding: 0.8rem 2rem;
-    font-size: 1.1rem;
-    border-radius: 50px;
+    padding: 0.875rem 2rem;
+    font-size: 0.95rem;
+    border-radius: 6px;
     cursor: pointer;
     margin-top: 1.5rem;
-    transition: all 0.3s ease;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
+    transition: all 0.15s ease;
+    font-weight: 500;
+    letter-spacing: 0.01em;
 }
 
 .btn:hover {
-    background: #162a63;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(31, 60, 136, 0.3);
+    background: #2a2a2a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
 }
 
 .btn:focus {
@@ -113,22 +137,33 @@ h1 {
 }
 
 .luck-message {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     padding: 1.5rem;
-    background: #f8f9ff;
-    border-radius: 10px;
-    border-left: 5px solid #1f3c88;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #1a1a1a;
 }
 
 .luck-message p {
-    margin: 0.8rem 0;
-    font-size: 1.05rem;
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+    color: #4a4a4a;
+}
+
+.luck-message p:first-child {
+    margin-top: 0;
+}
+
+.luck-message p:last-child {
+    margin-bottom: 0;
 }
 
 footer {
     margin-top: 3rem;
-    color: #666;
-    font-size: 0.9rem;
+    padding-top: 2rem;
+    color: #999;
+    font-size: 0.875rem;
+    border-top: 1px solid #e5e5e5;
 }
 
 @media (max-width: 768px) {
@@ -137,32 +172,43 @@ footer {
     }
     
     h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
     
-    .box {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+    .screen {
+        padding: 1.5rem;
+    }
+    
+    .screen h2 {
+        font-size: 1.25rem;
     }
 }
+#canvas-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
 #game-canvas {
-    background: #f4f6fb;
-    border-radius: 10px;
-    border: 1px solid #d0d7f0;
+    background: #f5f5f5;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
     width: 100%;
     max-width: 420px;
     display: block;
     margin: 0 auto;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    position: relative;
 }
 
 #mobile-controls {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     display: none; /* Oculto por padrão (desktop) */
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    padding: 0 1rem;
 }
 
 /* Mostrar controles apenas em dispositivos móveis */
@@ -173,23 +219,35 @@ footer {
 }
 
 .ctrl-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
     border: none;
-    background: #1f3c88;
+    background: #1a1a1a;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 5px 15px rgba(31, 60, 136, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.15s ease;
+}
+
+@media (max-width: 768px) {
+    .ctrl-btn {
+        width: 90px;
+        height: 90px;
+        font-size: 2rem;
+    }
 }
 
 .ctrl-btn:active {
-    transform: translateY(2px) scale(0.97);
-    box-shadow: 0 2px 8px rgba(31, 60, 136, 0.4);
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    background: #2a2a2a;
 }
 
 .ctrl-btn:focus {
@@ -214,30 +272,34 @@ footer {
 
 /* Estilos para informações da fase */
 #level-info {
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background: #f8f9ff;
-    border-radius: 10px;
-    border-left: 4px solid #1f3c88;
+    margin-bottom: 1.25rem;
+    padding: 1.25rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
+    text-align: left;
 }
 
 #level-title {
-    font-size: 1.3rem;
-    color: #1f3c88;
+    font-size: 1.125rem;
+    color: #1a1a1a;
     margin-bottom: 0.5rem;
     font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 #level-description {
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     color: #666;
     margin: 0;
+    line-height: 1.5;
 }
 
 /* Estilos para tela de fase completa */
 #level-complete-screen {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #1a1a1a;
     color: white;
+    border: none;
 }
 
 #level-complete-screen h2 {
@@ -246,27 +308,97 @@ footer {
 }
 
 #level-complete-message {
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #level-complete-text {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     margin: 0;
     line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 #level-complete-screen .btn {
     background: white;
-    color: #667eea;
-    font-weight: 600;
+    color: #1a1a1a;
+    font-weight: 500;
 }
 
 #level-complete-screen .btn:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+    background: #f5f5f5;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para estatísticas do jogo */
+#game-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+#progress-indicator {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+#current-phase {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+#attempts-counter {
+    color: #666;
+}
+
+/* Overlay de pausa */
+#pause-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+}
+
+.pause-message {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+}
+
+.pause-message h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.pause-message p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.pause-message .hint {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
 }

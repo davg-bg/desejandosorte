@@ -5,34 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boa sorte na prova!</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Boa sorte na prova</h1>
-            <p class="subtitle">Só uma pausa rápida antes de você arrebentar.</p>
+            <p class="subtitle">KKKKKKKKKKKKKKKKKKK</p>
         </header>
         
         <main>
             <div id="start-screen" class="screen">
-                <h2>Antes da prova, um mini desafio</h2>
-                <p>Clica no botão e faz um joguinho rápido pra ganhar uma dose extra de sorte.</p>
-                <button id="start-btn" class="btn" aria-label="Iniciar o jogo">Começar</button>
+                <h2>joguin de plataforma antes da prova</h2>
+                <p>se vc completar todas as fases, ce ganha uma dose de sorte pra sua prova e nas suas entregas de projetos</p>
+                <button id="start-btn" class="btn" aria-label="Iniciar o jogo">clica aqui KKKKKKKK</button>
             </div>
 
             <div id="game-screen" class="screen hidden">
+                <div id="game-stats">
+                    <div id="progress-indicator">Fase <span id="current-phase">1</span>/3</div>
+                    <div id="attempts-counter">Tentativas: <span id="attempts">0</span></div>
+                </div>
                 <div id="level-info">
-                    <h3 id="level-title">Fase 1: Catedral Nossa Senhora do Desterro</h3>
-                    <p id="level-description">Explore este marco histórico de Jundiaí!</p>
+                    <h3 id="level-title">fase 1: Catedral Nossa Senhora do Desterro</h3>
+                    <p id="level-description">a igrejinha massa la</p>
                 </div>
                 <div id="clue-container">
-                    <p id="clue">Chega até o objetivo sem cair.</p>
+                    <p id="clue"></p>
                 </div>
 
-                <canvas id="game-canvas" width="360" height="200" 
-                        aria-label="Jogo de plataforma: use as setas ou WASD para mover e pular. Alcance o objetivo no topo.">
-                </canvas>
+                <div id="canvas-container">
+                    <canvas id="game-canvas" width="360" height="200" 
+                            aria-label="Jogo de plataforma: use as setas ou WASD para mover e pular. Alcance o objetivo no topo.">
+                    </canvas>
+                    
+                    <div id="pause-overlay" class="hidden">
+                        <div class="pause-message">
+                            <h3>Pausado</h3>
+                            <p>Pressione P para continuar</p>
+                            <p class="hint">R - Reiniciar fase | ESC - Menu</p>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="mobile-controls" aria-label="Controles do jogo">
                     <button class="ctrl-btn" id="left-btn" aria-label="Mover para esquerda">◀</button>
@@ -42,20 +55,20 @@
             </div>
 
             <div id="level-complete-screen" class="screen hidden">
-                <h2>Fase Concluída! 🎉</h2>
+                <h2>boa, vamo pra proxima fase</h2>
                 <div id="level-complete-message">
-                    <p id="level-complete-text">Parabéns! Você completou esta fase!</p>
+                    <p id="level-complete-text"></p>
                 </div>
-                <button id="next-level-btn" class="btn" aria-label="Próxima fase">Próxima Fase</button>
+                <button id="next-level-btn" class="btn" aria-label="Próxima fase">Próxima fase</button>
             </div>
 
             <div id="message-screen" class="screen hidden">
-                <h2>Todas as Fases Concluídas! 🎉</h2>
+                <h2>Todas as fases concluídas! 🎉</h2>
                 <div id="final-message">
                     <div class="luck-message">
-                        <p>Parabéns! Você explorou os principais pontos históricos de Jundiaí!</p>
-                        <p>Boa prova hoje! Que dê tudo certo e você lembre de tudo na hora.</p>
-                        <p>Confia no que você estudou, o resto flui.</p>
+                        <p>boa, andou em jundiai</p>
+                        <p>espero que de tudo certo na prova e nas entregas</p>
+                        <p>confia no que você estudou, e marcha</p>
                     </div>
                 </div>
                 <button id="restart-btn" class="btn" aria-label="Jogar novamente">Jogar de novo</button>
@@ -64,7 +77,7 @@
     </div>
 
     <footer>
-        <p>Feito só pra te desejar boa prova hoje.</p>
+        <p>Boa prova, meu bem!</p>
     </footer>
 
     <script src="game.js"></script>
