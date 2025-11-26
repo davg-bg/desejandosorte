@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #1f3c88;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #1f3c88;
+    opacity: 0.8;
+}
+
+.screen {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    transition: all 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn {
+    background: #1f3c88;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: #162a63;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(31, 60, 136, 0.3);
+}
+
+.btn:focus {
+    outline: 3px solid #1f3c88;
+    outline-offset: 2px;
+}
+
+.btn:focus-visible {
+    outline: 3px solid #1f3c88;
+    outline-offset: 2px;
+}
+
+#interactive-area {
+    margin: 2rem 0;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.box {
+    width: 60px;
+    height: 60px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+}
+
+.box:hover {
+    background: #e0e0e0;
+    transform: scale(1.05);
+}
+
+.box.found {
+    background: #b5f5b5;
+    transform: scale(1.1);
+}
+
+.luck-message {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9ff;
+    border-radius: 10px;
+    border-left: 5px solid #1f3c88;
+}
+
+.luck-message p {
+    margin: 0.8rem 0;
+    font-size: 1.05rem;
+}
+
+footer {
+    margin-top: 3rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    .box {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+#game-canvas {
+    background: #f4f6fb;
+    border-radius: 10px;
+    border: 1px solid #d0d7f0;
+    width: 100%;
+    max-width: 420px;
+    display: block;
+    margin: 0 auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+#mobile-controls {
+    margin-top: 1rem;
+    display: none; /* Oculto por padrão (desktop) */
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Mostrar controles apenas em dispositivos móveis */
+@media (max-width: 768px) {
+    #mobile-controls {
+        display: flex;
+    }
+}
+
+.ctrl-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: #1f3c88;
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(31, 60, 136, 0.3);
+    cursor: pointer;
+}
+
+.ctrl-btn:active {
+    transform: translateY(2px) scale(0.97);
+    box-shadow: 0 2px 8px rgba(31, 60, 136, 0.4);
+}
+
+.ctrl-btn:focus {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+.ctrl-btn:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+/* Estilos para mensagem de queda */
+#clue-container {
+    min-height: 2rem;
+    margin-bottom: 1rem;
+}
+
+#clue {
+    transition: color 0.3s ease;
+}
+
+/* Estilos para informações da fase */
+#level-info {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f8f9ff;
+    border-radius: 10px;
+    border-left: 4px solid #1f3c88;
+}
+
+#level-title {
+    font-size: 1.3rem;
+    color: #1f3c88;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+#level-description {
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Estilos para tela de fase completa */
+#level-complete-screen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+#level-complete-screen h2 {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+#level-complete-message {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+#level-complete-text {
+    font-size: 1.1rem;
+    margin: 0;
+    line-height: 1.6;
+}
+
+#level-complete-screen .btn {
+    background: white;
+    color: #667eea;
+    font-weight: 600;
+}
+
+#level-complete-screen .btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
